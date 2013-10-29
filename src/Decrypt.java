@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * 
  */
@@ -15,7 +17,7 @@ public class Decrypt {
 		return (char)((temp-32-twist+95)%95+32);
 	}
 	
-	public String decrypt(String string, int twist){
+	public String decryptString(String string, int twist){
 		StringBuilder sb = new StringBuilder();
 		for (char i: string.toCharArray()){
 			if (((int)i)<127 && ((int)i) > 31){
@@ -25,6 +27,23 @@ public class Decrypt {
 				sb.append(i);
 			}
 		}
+		return sb.toString();
+	}
+	
+	public String decrypt(String string, ArrayList<Key> keys){
+		StringBuilder sb = new StringBuilder();
+		for (char i: string.toCharArray()){
+			sb.append(i);
+		}
+		for (int i = 0; i<keys.size(); i++){
+			int start = keys.get(i).getStart();
+			int twist = keys.get(i).getTwist();
+			if (start<sb.length()){
+				String sub = string.substring(start);
+				sb.replace(start, sb.length(), this.decryptString(sub, twist)); 					
+				}
+			}
+		
 		return sb.toString();
 	}
 
