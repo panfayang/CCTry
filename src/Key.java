@@ -16,4 +16,8 @@ public class Key {
 	public int getTwist(){
 		return this.twist;
 	}
+	
+	public String toString(){
+		return ( + this.start + "," + this.twist); 
+	}
 }
